@@ -1,5 +1,3 @@
-# create-sg.tf
-
 data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
 }
@@ -15,24 +13,59 @@ module "bastion_sg" {
   tags                = var.project_tags
 }
 
-module "consul_sg" {
+module "ssh_sg" {
   source = "terraform-aws-modules/security-group/aws//modules/ssh"
 
-  name        = "consul"
-  description = "Dummy Security group for Consul"
+  name        = "SSH"
+  description = "Security group for SSH access"
   vpc_id      = module.vpc.vpc_id
 
-  ingress_cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+  ingress_cidr_blocks = module.vpc.private_subnets_cidr_blocks
   tags                = var.project_tags
 }
 
-module "vault_sg" {
-  source = "terraform-aws-modules/security-group/aws//modules/ssh"
+module "consul_sg" {
+  source = "terraform-aws-modules/security-group/aws"
 
-  name        = "vault"
-  description = "Dummy Security group for Vault"
+  name        = "consul"
+  description = "Security group for Consul"
   vpc_id      = module.vpc.vpc_id
 
-  ingress_cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
-  tags                = var.project_tags
+  ingress_cidr_blocks = module.vpc.private_subnets_cidr_blocks
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 8300
+      to_port     = 8300
+      protocol    = "tcp"
+      description = "Server RPC"
+    },
+    {
+      from_port   = 8301
+      to_port     = 8301
+      protocol    = "tcp"
+      description = "Serf LAN"
+    },
+  ]
+
+  tags = var.project_tags
+}
+
+module "vault_sg" {
+  source = "terraform-aws-modules/security-group/aws"
+
+  name        = "vault"
+  description = "Security group for Vault"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress_cidr_blocks = module.vpc.private_subnets_cidr_blocks
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 8200
+      to_port     = 8200
+      protocol    = "tcp"
+      description = "Vault API"
+    },
+  ]
+
+  tags = var.project_tags
 }

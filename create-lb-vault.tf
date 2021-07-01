@@ -18,14 +18,14 @@ module "vault_nlb" {
       backend_port     = 8200
       target_type      = "instance"
       targets = {
-          vaulta = {
-              target_id = module.ec2_vault_a.id[0]
-              port = 8200
-          },
-          vaultb = {
-              target_id = module.ec2_vault_b.id[0]
-              port = 8200
-          }
+        vaulta = {
+          target_id = module.ec2_vault_a.id[0]
+          port      = 8200
+        },
+        vaultb = {
+          target_id = module.ec2_vault_b.id[0]
+          port      = 8200
+        }
       }
     }
   ]

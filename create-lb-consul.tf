@@ -18,18 +18,18 @@ module "consul_nlb" {
       backend_port     = 8300
       target_type      = "instance"
       targets = {
-          consula = {
-              target_id = module.ec2_consul_a.id[0]
-              port = 8300
-          },
-          consulb = {
-              target_id = module.ec2_consul_b.id[0]
-              port = 8300
-          },
-          consulc = {
-              target_id = module.ec2_consul_c.id[0]
-              port = 8300
-          }
+        consula = {
+          target_id = module.ec2_consul_a.id[0]
+          port      = 8300
+        },
+        consulb = {
+          target_id = module.ec2_consul_b.id[0]
+          port      = 8300
+        },
+        consulc = {
+          target_id = module.ec2_consul_c.id[0]
+          port      = 8300
+        }
       }
     },
     {
@@ -38,18 +38,18 @@ module "consul_nlb" {
       backend_port     = 8301
       target_type      = "instance"
       targets = {
-          consula = {
-              target_id = module.ec2_consul_a.id[0]
-              port = 8301
-          },
-          consulb = {
-              target_id = module.ec2_consul_b.id[0]
-              port = 8301
-          },
-          consulc = {
-              target_id = module.ec2_consul_c.id[0]
-              port = 8301
-          }
+        consula = {
+          target_id = module.ec2_consul_a.id[0]
+          port      = 8301
+        },
+        consulb = {
+          target_id = module.ec2_consul_b.id[0]
+          port      = 8301
+        },
+        consulc = {
+          target_id = module.ec2_consul_c.id[0]
+          port      = 8301
+        }
       }
     }
   ]
