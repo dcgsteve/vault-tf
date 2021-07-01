@@ -12,8 +12,8 @@ variable "project_tags" {
   description = "Tags to apply to resources allocated to project"
   type        = map(string)
   default = {
-    project        = "ecp-vault"
-    environment    = "dev"
+    project         = "ecp-vault"
+    environment     = "dev"
     primary_contact = "Steve Cliff"
     primary_email   = "steve.cliff@atos.net"
   }

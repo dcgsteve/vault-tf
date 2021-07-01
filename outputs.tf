@@ -7,10 +7,10 @@ output "project_details" {
 
 output "vault_ips" {
   description = "List of Vault IP's"
-  value = "WIP"
+  value       = "WIP"
 }
 
 output "consul_ips" {
   description = "List of Consul IP's"
-  value = "WIP"
+  value       = "WIP"
 }
