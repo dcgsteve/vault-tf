@@ -4,12 +4,24 @@ data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
 }
 
-module "ssh_sg" {
+module "consul_sg" {
   source = "terraform-aws-modules/security-group/aws//modules/ssh"
 
-  name        = "SSH"
-  description = "Security group for SSH"
+  name        = "consul"
+  description = "Dummy Security group for Consul"
   vpc_id      = module.vpc.vpc_id
 
   ingress_cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+  tags                = var.project_tags
+}
+
+module "vault_sg" {
+  source = "terraform-aws-modules/security-group/aws//modules/ssh"
+
+  name        = "vault"
+  description = "Dummy Security group for Vault"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress_cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+  tags                = var.project_tags
 }
