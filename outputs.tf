@@ -7,10 +7,15 @@ output "project_details" {
 
 output "vault_ips" {
   description = "List of Vault IP's"
-  value       = "WIP"
+  value       = [ module.ec2_vault_a.private_ip, module.ec2_vault_b.private_ip ]
 }
 
 output "consul_ips" {
   description = "List of Consul IP's"
-  value       = "WIP"
+  value       = [ module.ec2_consul_a.private_ip, module.ec2_consul_b.private_ip, module.ec2_consul_c.private_ip ]
+}
+
+output "bastion_ip" {
+  description = "Bastion IP"
+  value       = [ module.ec2_bastion.private_ip ]
 }
