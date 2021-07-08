@@ -13,14 +13,24 @@ module "bastion_sg" {
   tags                = var.project_tags
 }
 
-module "ssh_sg" {
+module "ssh_internal_sg" {
   source = "terraform-aws-modules/security-group/aws//modules/ssh"
 
   name        = "SSH"
-  description = "Security group for SSH access"
+  description = "Security group for internal SSH access"
   vpc_id      = module.vpc.vpc_id
 
   ingress_cidr_blocks = module.vpc.private_subnets_cidr_blocks
+  tags                = var.project_tags
+}
+
+module "ssh_bastion_sg" {
+  source = "terraform-aws-modules/security-group/aws//modules/ssh"
+
+  name        = "SSH"
+  description = "Security group for bastion SSH access"
+  vpc_id      = module.vpc.vpc_id
+  ingress_cidr_blocks = [ "${module.ec2_bastion.private_ip[0]}/32" ]
   tags                = var.project_tags
 }
 

@@ -9,7 +9,7 @@ module "ec2_vault_a" {
   instance_type          = var.instance_type
   key_name               = var.instance_keypair
   monitoring             = true
-  vpc_security_group_ids = ["${module.vault_sg.security_group_id}", "${module.ssh_sg.security_group_id}"]
+  vpc_security_group_ids = ["${module.vault_sg.security_group_id}", "${module.ssh_internal_sg.security_group_id}", "${module.ssh_bastion_sg.security_group_id}"]
   subnet_id              = module.vpc.private_subnets[0]
   tags                   = var.project_tags
 }
@@ -25,7 +25,7 @@ module "ec2_vault_b" {
   instance_type          = var.instance_type
   key_name               = var.instance_keypair
   monitoring             = true
-  vpc_security_group_ids = ["${module.vault_sg.security_group_id}", "${module.ssh_sg.security_group_id}"]
+  vpc_security_group_ids = ["${module.vault_sg.security_group_id}", "${module.ssh_internal_sg.security_group_id}", "${module.ssh_bastion_sg.security_group_id}"]
   subnet_id              = module.vpc.private_subnets[1]
   tags                   = var.project_tags
 }
